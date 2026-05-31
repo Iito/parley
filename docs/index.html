@@ -1,0 +1,3372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parley — Local AI inference mesh for teams | On-premise LLM cluster</title>
+  <meta name="description"
+    content="Parley turns your Apple Silicon Macs, NVIDIA workstations, and spare hardware into a shared on-premise LLM cluster. Local AI inference with zero config, zero cloud costs, and zero data leaks." />
+  <meta name="keywords" content="local AI, on-premise LLM, AI inference mesh, local LLM cluster, private AI, self-hosted AI, Apple Silicon AI, NVIDIA LLM, team AI infrastructure, Ollama alternative" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://lmparley.com/" />
+  <meta property="og:title" content="Parley — Local AI inference mesh for teams" />
+  <meta property="og:description"
+    content="One binary turns your machines into a shared on-premise LLM cluster. Local AI inference with zero config, zero cloud costs, zero data leaks." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lmparley.com" />
+  <meta property="og:site_name" content="Parley" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Parley — Local AI inference mesh for teams" />
+  <meta name="twitter:description"
+    content="One binary turns your machines into a shared on-premise LLM cluster. Local AI inference with zero config, zero cloud costs, zero data leaks." />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #fafaf8;
+      --gray-50: #f4f4f2;
+      --gray-100: #ececea;
+      --gray-200: #e0dfdb;
+      --gray-400: #94928c;
+      --gray-500: #706e68;
+      --gray-600: #57554f;
+      --gray-800: #2c2a26;
+      --black: #1a1917;
+      --teal: #0d9488;
+      --teal-dark: #0f766e;
+      --teal-light: #f0fdfa;
+      --teal-border: #99f6e4;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--black);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray-500);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--black);
+    }
+
+    .nav-star {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-500) !important;
+      transition: all 0.15s;
+    }
+
+    .nav-star:hover {
+      border-color: var(--black);
+      color: var(--black) !important;
+    }
+
+    .nav-cta {
+      background: var(--black) !important;
+      color: var(--white) !important;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.8;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--black);
+    }
+
+    .hero {
+      position: relative;
+      padding: 160px 40px 100px;
+      max-width: 840px;
+      margin: 0 auto;
+      overflow: visible;
+    }
+
+    .hero-mesh {
+      position: absolute;
+      top: 80px;
+      right: -120px;
+      width: 500px;
+      height: 400px;
+      opacity: 0.07;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--teal-dark);
+      background: var(--teal-light);
+      border: 1px solid var(--teal-border);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+      text-decoration: none;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    h1 {
+      font-weight: 800;
+      font-size: clamp(42px, 6vw, 68px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: var(--black);
+      margin-bottom: 24px;
+    }
+
+    h1 em {
+      font-style: normal;
+      font-weight: 300;
+      color: var(--gray-500);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--gray-500);
+      line-height: 1.65;
+      max-width: 540px;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--black);
+      color: var(--white);
+      padding: 13px 26px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.8;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gray-500);
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .btn-secondary:hover {
+      color: var(--black);
+      border-color: var(--gray-500);
+    }
+
+    .hero-meta {
+      margin-top: 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--gray-400);
+    }
+
+    .mesh-diagram-wrap {
+      padding: 0 40px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .mesh-diagram {
+      background: var(--off-white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 48px 40px 40px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .mesh-diagram.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mesh-diagram-label {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    .mesh-diagram-status {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--gray-400);
+      transition: color 0.4s;
+    }
+
+    .mesh-diagram-status.ready {
+      color: var(--teal);
+    }
+
+    .mesh-nodes {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mesh-node {
+      width: 200px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.4s, box-shadow 0.4s;
+    }
+
+    .mesh-node.booted {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .mesh-node.connected {
+      border-color: var(--teal-border);
+      box-shadow: 0 4px 20px rgba(13, 148, 136, 0.06);
+    }
+
+    .mesh-node-status {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--gray-200);
+      transition: background 0.3s;
+    }
+
+    .mesh-node-status.online {
+      background: var(--teal);
+    }
+
+    .mesh-node-status.discovering {
+      background: #f59e0b;
+      animation: blink 0.6s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    .mesh-node-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+
+    .mesh-node-phase {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--gray-400);
+      margin-bottom: 8px;
+      min-height: 14px;
+      transition: color 0.3s;
+    }
+
+    .mesh-node-phase.teal {
+      color: var(--teal);
+    }
+
+    .mesh-node-models {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .mesh-node-models.show {
+      opacity: 1;
+    }
+
+    .mesh-model {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--gray-400);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mesh-model-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .mesh-model-dot.loaded {
+      background: var(--teal);
+    }
+
+    .mesh-model-dot.cold {
+      background: var(--gray-400);
+    }
+
+    .mesh-connections {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .mesh-conn-line {
+      stroke: var(--gray-200);
+      stroke-width: 1.5;
+      fill: none;
+      opacity: 0;
+      transition: opacity 0.4s, stroke 0.4s;
+    }
+
+    .mesh-conn-line.drawing {
+      opacity: 1;
+    }
+
+    .mesh-conn-line.live {
+      opacity: 1;
+      stroke: var(--teal-border);
+    }
+
+    .mesh-conn-dot {
+      r: 3.5;
+      fill: var(--teal);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .mesh-conn-dot.show {
+      opacity: 1;
+    }
+
+    .stats-bar {
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 28px 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat {
+      padding: 0 24px;
+      border-right: 1px solid var(--gray-200);
+    }
+
+    .stat:first-child {
+      padding-left: 0;
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-weight: 800;
+      font-size: 32px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--gray-400);
+      font-weight: 400;
+    }
+
+    section {
+      padding: 100px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-weight: 700;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      margin-bottom: 16px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--gray-500);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 48px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--gray-200);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--white);
+      padding: 32px;
+      transition: background 0.15s, opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-card:hover {
+      background: var(--off-white);
+    }
+
+    .feature-icon {
+      color: var(--gray-400);
+      margin-bottom: 14px;
+    }
+
+    .feature-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--gray-400);
+      margin-bottom: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .feature-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--gray-500);
+      line-height: 1.65;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--gray-200);
+      margin: 0 40px;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .compare-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 600px;
+    }
+
+    .compare-table thead th {
+      text-align: left;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      padding: 0 16px 14px 0;
+      border-bottom: 1px solid var(--gray-200);
+      white-space: nowrap;
+    }
+
+    .compare-table thead th:first-child {
+      padding-left: 0;
+    }
+
+    .compare-table thead th.col-parley {
+      color: var(--teal-dark);
+    }
+
+    .compare-table tbody tr {
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .compare-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .compare-table tbody td {
+      padding: 14px 16px 14px 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--gray-500);
+      white-space: nowrap;
+    }
+
+    .compare-table tbody td:first-child {
+      color: var(--gray-800);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      padding-left: 0;
+    }
+
+    .check {
+      color: var(--teal);
+      font-weight: 500;
+    }
+
+    .cross {
+      color: var(--gray-200);
+    }
+
+    .partial {
+      color: var(--gray-400);
+      font-size: 11px;
+    }
+
+    .faq-list {
+      max-width: 640px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--black);
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.4;
+      gap: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .faq-question:hover {
+      color: var(--gray-600);
+    }
+
+    .faq-chevron {
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+      color: var(--gray-400);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .faq-answer-inner {
+      padding: 0 0 20px;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--gray-500);
+      line-height: 1.7;
+    }
+
+    .faq-answer-inner code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      background: var(--gray-50);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    .install-section {
+      background: var(--black);
+      border-radius: 16px;
+      padding: 56px;
+      color: var(--white);
+    }
+
+    .install-section .section-label {
+      color: #555;
+    }
+
+    .install-section h2 {
+      color: var(--white);
+    }
+
+    .install-section .section-body {
+      color: #777;
+    }
+
+    .install-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .install-card {
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 28px;
+    }
+
+    .install-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .install-card-title span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      background: rgba(13, 148, 136, 0.15);
+      color: var(--teal);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .install-card-desc {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .code-block-wrap {
+      position: relative;
+    }
+
+    .code-block {
+      background: #0d0d0c;
+      border: 1px solid #222;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: #ccc;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    .code-block .comment {
+      color: #444;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #666;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .copy-btn:hover {
+      color: #ccc;
+      border-color: #555;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--black);
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      margin-top: 16px;
+    }
+
+    .btn-download:hover {
+      opacity: 0.85;
+    }
+
+    footer {
+      border-top: 1px solid var(--gray-200);
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 40px 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-logo {
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--black);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 8px;
+      letter-spacing: -0.04em;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--gray-400);
+      line-height: 1.5;
+    }
+
+    .footer-col-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 16px;
+    }
+
+    .footer-col-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col-links a {
+      font-size: 13px;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-col-links a:hover {
+      color: var(--black);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--gray-200);
+      padding-top: 24px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--gray-400);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ── DATA FLOW ── */
+    .dataflow-wrap {
+      padding: 0 40px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .dataflow {
+      background: var(--black);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 20px 0 0;
+      position: relative;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow: hidden;
+    }
+
+    .dataflow.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dataflow-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .dataflow-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    .dataflow-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dataflow-tab {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: transparent;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .dataflow-tab:hover {
+      color: #aaa;
+      border-color: #555;
+    }
+
+    .dataflow-tab.active {
+      background: var(--teal);
+      color: var(--white);
+      border-color: var(--teal);
+    }
+
+    .dataflow-canvas {
+      width: 100%;
+      height: 260px;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .dataflow-wrap {
+        padding: 0 20px 60px;
+      }
+
+      .dataflow-header {
+        padding: 0 16px;
+      }
+
+      .dataflow-tab {
+        font-size: 10px;
+        padding: 5px 10px;
+      }
+
+      .dataflow-canvas {
+        height: 480px;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-badge {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .hero h1 {
+      animation: fadeUp 0.5s ease 0.08s both;
+    }
+
+    .hero-sub {
+      animation: fadeUp 0.5s ease 0.16s both;
+    }
+
+    .hero-actions {
+      animation: fadeUp 0.5s ease 0.22s both;
+    }
+
+    .hero-meta {
+      animation: fadeUp 0.5s ease 0.28s both;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── TERMINAL SHOWCASE ── */
+    .terminal-wrap {
+      padding: 0 40px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .terminal-section {
+      background: var(--black);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #222;
+      background: #0d0d0c;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .terminal-dots span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #2a2a2a;
+    }
+
+    .terminal-dots span:nth-child(1) {
+      background: #ff5f57;
+    }
+
+    .terminal-dots span:nth-child(2) {
+      background: #febc2e;
+    }
+
+    .terminal-dots span:nth-child(3) {
+      background: #28c840;
+    }
+
+    .terminal-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: #666;
+    }
+
+    .terminal-body {
+      padding: 20px 24px 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      color: #ccc;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+      margin: 0;
+    }
+
+    .terminal-body .t-prompt {
+      color: var(--teal);
+      margin-right: 6px;
+    }
+
+    .terminal-body .t-cmd {
+      color: #fff;
+    }
+
+    .terminal-body .t-dim {
+      color: #666;
+    }
+
+    .terminal-body .t-teal {
+      color: var(--teal);
+    }
+
+    .terminal-body .t-white {
+      color: #eaeaea;
+    }
+
+    .terminal-body .t-amber {
+      color: #f59e0b;
+    }
+
+    .terminal-body .t-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 14px;
+      background: var(--teal);
+      vertical-align: text-bottom;
+      animation: blink 1s steps(2) infinite;
+    }
+
+    .terminal-caption {
+      margin-top: 16px;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    /* ── ALIASES STRIP ── */
+    .aliases-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--gray-200);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 32px;
+    }
+
+    .alias-card {
+      background: var(--white);
+      padding: 20px;
+    }
+
+    .alias-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-dark);
+      margin-bottom: 6px;
+    }
+
+    .alias-desc {
+      font-size: 12px;
+      color: var(--gray-500);
+      line-height: 1.5;
+    }
+
+    /* ── USE CASES ── */
+    .usecases-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .usecase {
+      background: var(--off-white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .usecase:hover {
+      border-color: var(--gray-400);
+      transform: translateY(-2px);
+    }
+
+    .usecase-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--gray-400);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .usecase-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .usecase-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--gray-500);
+      line-height: 1.65;
+    }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .price-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 24px 20px;
+      background: var(--white);
+      position: relative;
+      transition: border-color 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price-card:hover {
+      border-color: var(--gray-400);
+    }
+
+    .price-card.featured {
+      border-color: var(--teal-border);
+      background: var(--teal-light);
+    }
+
+    .price-tier {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--gray-400);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .price-card.featured .price-tier {
+      color: var(--teal-dark);
+    }
+
+    .price-amount {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+
+    .price-meta {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-bottom: 14px;
+    }
+
+    .price-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+    }
+
+    .price-features li {
+      font-size: 12px;
+      color: var(--gray-600);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .price-features li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--gray-400);
+    }
+
+    .price-btn {
+      display: block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background: var(--gray-100);
+      color: var(--black);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+      transition: background 0.15s;
+    }
+
+    .price-btn:hover {
+      background: var(--gray-200);
+    }
+
+    .price-btn-primary {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .price-btn-primary:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 760px) {
+      .pricing-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .aliases-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        padding: 0 20px;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--gray-200);
+        padding: 16px 20px;
+        gap: 16px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .hero {
+        padding: 120px 20px 60px;
+      }
+
+      .hero-mesh {
+        display: none;
+      }
+
+      section {
+        padding: 60px 20px;
+      }
+
+      .stats-bar {
+        grid-template-columns: 1fr 1fr;
+        padding: 24px 20px;
+      }
+
+      .stat {
+        padding: 16px 0;
+        border-right: none;
+      }
+
+      .stat:nth-child(1),
+      .stat:nth-child(2) {
+        border-bottom: 1px solid var(--gray-200);
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .install-options {
+        grid-template-columns: 1fr !important;
+      }
+
+      .install-section {
+        padding: 32px 24px;
+      }
+
+      .mesh-diagram-wrap {
+        padding: 0 20px 60px;
+      }
+
+      .mesh-nodes {
+        gap: 16px;
+      }
+
+      .mesh-node {
+        width: 100%;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      footer {
+        padding: 40px 20px 32px;
+      }
+
+      .divider {
+        margin: 0 20px;
+      }
+
+      .terminal-wrap {
+        padding: 0 20px 60px;
+      }
+
+      .terminal-body {
+        font-size: 11px;
+        padding: 16px 18px 20px;
+      }
+
+      .usecases-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .aliases-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Parley",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "macOS, Linux, Windows",
+    "description": "A single binary that turns Apple Silicon Macs, NVIDIA workstations, and spare hardware into a shared on-premise LLM inference cluster for teams.",
+    "url": "https://lmparley.com",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "description": "Free tier: up to 3 nodes"
+    },
+    "featureList": [
+      "Multi-machine mesh networking",
+      "Auto-discovery on LAN",
+      "Smart routing and fair scheduling",
+      "Peer-to-peer model transfer",
+      "OpenAI and Ollama API compatible",
+      "TLS encryption between nodes",
+      "Built-in web UI",
+      "Apple Silicon MLX backend",
+      "CUDA and Vulkan support"
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="/logo-64.png" alt="Parley" width="28" height="28" style="border-radius:0px;" />
+      arley
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#use-cases">Use cases</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="docs.html">Docs</a></li>
+      <li><a href="https://github.com/Iito/parley/releases" target="_blank" rel="noopener" class="nav-cta">Download</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <svg class="hero-mesh" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="80" cy="120" r="4" fill="currentColor" />
+      <circle cx="220" cy="60" r="4" fill="currentColor" />
+      <circle cx="400" cy="100" r="4" fill="currentColor" />
+      <circle cx="140" cy="260" r="4" fill="currentColor" />
+      <circle cx="320" cy="220" r="4" fill="currentColor" />
+      <circle cx="460" cy="280" r="4" fill="currentColor" />
+      <circle cx="60" cy="350" r="4" fill="currentColor" />
+      <circle cx="250" cy="340" r="4" fill="currentColor" />
+      <circle cx="420" cy="360" r="4" fill="currentColor" />
+      <line x1="80" y1="120" x2="220" y2="60" stroke="currentColor" stroke-width="0.8" />
+      <line x1="220" y1="60" x2="400" y2="100" stroke="currentColor" stroke-width="0.8" />
+      <line x1="80" y1="120" x2="140" y2="260" stroke="currentColor" stroke-width="0.8" />
+      <line x1="220" y1="60" x2="320" y2="220" stroke="currentColor" stroke-width="0.8" />
+      <line x1="400" y1="100" x2="320" y2="220" stroke="currentColor" stroke-width="0.8" />
+      <line x1="140" y1="260" x2="320" y2="220" stroke="currentColor" stroke-width="0.8" />
+      <line x1="320" y1="220" x2="460" y2="280" stroke="currentColor" stroke-width="0.8" />
+      <line x1="60" y1="350" x2="140" y2="260" stroke="currentColor" stroke-width="0.8" />
+      <line x1="250" y1="340" x2="140" y2="260" stroke="currentColor" stroke-width="0.8" />
+      <line x1="250" y1="340" x2="320" y2="220" stroke="currentColor" stroke-width="0.8" />
+      <line x1="420" y1="360" x2="460" y2="280" stroke="currentColor" stroke-width="0.8" />
+      <line x1="250" y1="340" x2="420" y2="360" stroke="currentColor" stroke-width="0.8" />
+      <line x1="80" y1="120" x2="320" y2="220" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4" />
+      <line x1="400" y1="100" x2="460" y2="280" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4" />
+    </svg>
+
+    <a href="https://github.com/Iito/parley/releases" class="hero-badge" id="version-badge">Loading...</a>
+    <h1>Every machine,<br><em>one mesh.</em></h1>
+    <p class="hero-sub">
+      A single binary turns your Apple Silicon Macs, NVIDIA workstations, and spare hardware into a shared LLM cluster.
+      Zero config, zero cloud, zero data leaks.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.1/Parley-0.6.0-beta.1-macOS.dmg" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download for macOS
+      </a>
+      <a href="#get-started" class="btn-secondary">Windows & more →</a>
+    </div>
+    <p class="hero-meta">macOS &nbsp;&middot;&nbsp; Windows &nbsp;&middot;&nbsp; <span style="color: var(--gray-400);">Linux coming soon</span></p>
+  </div>
+
+  <div class="mesh-diagram-wrap">
+    <div class="mesh-diagram" id="mesh-diagram">
+      <div class="mesh-diagram-label">Live mesh</div>
+      <div class="mesh-diagram-status" id="mesh-status"></div>
+      <svg class="mesh-connections" id="mesh-svg">
+        <line class="mesh-conn-line" id="conn-01" />
+        <line class="mesh-conn-line" id="conn-02" />
+        <line class="mesh-conn-line" id="conn-12" />
+        <circle class="mesh-conn-dot" id="dot-01" />
+        <circle class="mesh-conn-dot" id="dot-02" />
+        <circle class="mesh-conn-dot" id="dot-12" />
+        <circle class="mesh-conn-dot" id="dot-10" />
+        <circle class="mesh-conn-dot" id="dot-20" />
+        <circle class="mesh-conn-dot" id="dot-21" />
+      </svg>
+      <div class="mesh-nodes" id="mesh-nodes">
+        <div class="mesh-node" id="mnode-0">
+          <div class="mesh-node-status" id="mstatus-0"></div>
+          <div class="mesh-node-name">macmini@192.168.1.63</div>
+          <div class="mesh-node-phase" id="mphase-0"></div>
+          <div class="mesh-node-models" id="mmodels-0">
+            <div class="mesh-model">
+              <div class="mesh-model-dot loaded"></div>mistral:7b
+            </div>
+            <div class="mesh-model">
+              <div class="mesh-model-dot cold"></div>deepseek-r1:8b
+            </div>
+          </div>
+        </div>
+        <div class="mesh-node" id="mnode-1">
+          <div class="mesh-node-status" id="mstatus-1"></div>
+          <div class="mesh-node-name">workstation@192.168.1.51</div>
+          <div class="mesh-node-phase" id="mphase-1"></div>
+          <div class="mesh-node-models" id="mmodels-1">
+            <div class="mesh-model">
+              <div class="mesh-model-dot loaded"></div>gemma3:12b
+            </div>
+            <div class="mesh-model">
+              <div class="mesh-model-dot loaded"></div>nemotron:4b
+            </div>
+          </div>
+        </div>
+        <div class="mesh-node" id="mnode-2">
+          <div class="mesh-node-status" id="mstatus-2"></div>
+          <div class="mesh-node-name">ubuntu@192.168.1.42</div>
+          <div class="mesh-node-phase" id="mphase-2"></div>
+          <div class="mesh-node-models" id="mmodels-2">
+            <div class="mesh-model">
+              <div class="mesh-model-dot loaded"></div>qwen3-coder:30b
+            </div>
+            <div class="mesh-model">
+              <div class="mesh-model-dot cold"></div>llama3.1:8b
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA FLOW -->
+  <div class="dataflow-wrap">
+    <div class="dataflow" id="dataflow">
+      <div class="dataflow-header">
+        <div class="dataflow-label">Request flow</div>
+        <div class="dataflow-tabs">
+          <button class="dataflow-tab active" data-flow="direct">Direct routing</button>
+          <button class="dataflow-tab" data-flow="orchestrated">With planner</button>
+        </div>
+      </div>
+      <canvas class="dataflow-canvas" id="dataflow-canvas"></canvas>
+    </div>
+  </div>
+
+  <!-- TERMINAL SHOWCASE -->
+  <div class="terminal-wrap">
+    <div class="terminal-section fade-up">
+      <div class="terminal-header">
+        <div class="terminal-dots"><span></span><span></span><span></span></div>
+        <div class="terminal-title">macmini@192.168.1.63 &mdash; parley status</div>
+      </div>
+      <pre class="terminal-body"><span class="t-prompt">$</span><span class="t-cmd">parley status</span>
+<span class="t-dim">parley mesh:</span> <span class="t-teal">ok</span>
+  <span class="t-dim">node: </span> macmini@192.168.1.63
+  <span class="t-dim">peers:</span> 2
+
+  <span class="t-white">macmini@192.168.1.63</span>     <span class="t-teal">[ok]</span> <span class="t-dim">inflight=0</span>
+    <span class="t-teal">*</span> mistral:7b
+    <span class="t-dim">-</span> deepseek-r1:8b
+  <span class="t-white">workstation@192.168.1.51</span> <span class="t-teal">[ok]</span> <span class="t-dim">inflight=1</span>
+    <span class="t-teal">*</span> gemma3:12b
+    <span class="t-dim">-</span> nemotron-3-nano:4b
+  <span class="t-white">ubuntu@192.168.1.42</span>      <span class="t-teal">[ok]</span> <span class="t-dim">inflight=0</span>
+    <span class="t-teal">*</span> qwen3-coder:30b
+    <span class="t-dim">-</span> llama3.1:8b
+
+<span class="t-dim">license:</span> free tier
+  <span class="t-dim">nodes:     </span> <span class="t-teal">3/3</span>
+  <span class="t-dim">concurrent:</span> 2
+
+<span class="t-dim">aliases:</span>
+  <span class="t-white">parley:code  </span> best available code model
+  <span class="t-white">parley:fast  </span> smallest loaded model
+  <span class="t-white">parley:best  </span> largest / most capable model
+  <span class="t-white">parley:reason</span> best available reasoning model<span class="t-cursor"></span></pre>
+    </div>
+    <p class="terminal-caption">Real output. Ships a web UI for mesh status and chat &mdash; any OpenAI-compatible
+      frontend works too.</p>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-number" data-count="3">0</div>
+      <div class="stat-label">nodes free forever</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number" data-count="0" data-static="true">0</div>
+      <div class="stat-label">config files needed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">&lt;1ms</div>
+      <div class="stat-label">mesh discovery</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number" data-count="100" data-suffix="%">0</div>
+      <div class="stat-label">data stays local</div>
+    </div>
+  </div>
+
+  <section id="features">
+    <p class="section-label fade-up">Why Parley</p>
+    <h2 class="fade-up">Your machines already<br>have the hardware.</h2>
+    <p class="section-body fade-up">
+      Big Tech is burning through $700 billion a year on AI infrastructure, and free cash flow is collapsing under
+      the weight. Parley connects the machines you already own into a single inference pool &mdash; every model on
+      every node, reachable from every desk. No orchestration to maintain, no cloud bill to watch climb.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
+          <circle cx="12" cy="5" r="3" />
+          <circle cx="5" cy="19" r="3" />
+          <circle cx="19" cy="19" r="3" />
+          <line x1="12" y1="8" x2="5" y2="16" />
+          <line x1="12" y1="8" x2="19" y2="16" />
+          <line x1="8" y1="19" x2="16" y2="19" />
+        </svg>
+        <div class="feature-label">01 &mdash; Mesh</div>
+        <div class="feature-title">One pool, not N machines</div>
+        <div class="feature-desc">Models loaded on any node are usable from every node. Peer-to-peer model transfer
+          means one download serves the whole team.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        <div class="feature-label">02 &mdash; Routing</div>
+        <div class="feature-title">Smart routing</div>
+        <div class="feature-desc">Requests go to the node that already has the model in memory. If two nodes have it,
+          the one with the shortest queue wins.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
+          <path
+            d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0017 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 00-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06z" />
+          <path d="M10 2c1 .5 2 2 2 5" />
+        </svg>
+        <div class="feature-label">03 &mdash; Engine</div>
+        <div class="feature-title">Spindll, batteries included</div>
+        <div class="feature-desc">Ships its own Rust inference engine. GGUF via llama.cpp matches Ollama tok/s on every OS with 10&ndash;15% faster time-to-first-token. On Apple Silicon, the native MLX backend pushes 20%+ higher throughput &mdash; a speed tier Ollama can't reach. CUDA and Vulkan on NVIDIA. Nothing else to install.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
+          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
+          <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
+        </svg>
+        <div class="feature-label">04 &mdash; API</div>
+        <div class="feature-title">Drop-in compatible</div>
+        <div class="feature-desc">OpenAI and Ollama API compatible. Set one env var and your existing tools, scripts,
+          and IDE integrations just work.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 00-3-3.87" />
+          <path d="M16 3.13a4 4 0 010 7.75" />
+        </svg>
+        <div class="feature-label">05 &mdash; Scheduling</div>
+        <div class="feature-title">Fair scheduling</div>
+        <div class="feature-desc">Per-user request queuing. No single script or developer can monopolize the cluster.
+          The user with the fewest in-flight requests goes next.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0110 0v4" />
+        </svg>
+        <div class="feature-label">06 &mdash; Security</div>
+        <div class="feature-title">Encrypted by default</div>
+        <div class="feature-desc">TLS between every node. Per-machine certificates generated on first boot.
+          Identity-pinned peers &mdash; changed keys trigger warnings, not silent compromise.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
+          <path d="M4 7h16M4 12h10M4 17h6" />
+          <circle cx="18" cy="17" r="3" />
+        </svg>
+        <div class="feature-label">07 &mdash; Aliases</div>
+        <div class="feature-title">Address capability, not models</div>
+        <div class="feature-desc">Call <code
+            style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--gray-50);padding:1px 5px;border-radius:3px">parley:code</code>
+          or <code
+            style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--gray-50);padding:1px 5px;border-radius:3px">parley:best</code>.
+          The mesh resolves to whatever is loaded and capable, so you don't break when a model is unloaded.</div>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
+          <polyline points="4 17 10 11 4 5" />
+          <line x1="12" y1="19" x2="20" y2="19" />
+        </svg>
+        <div class="feature-label">08 &mdash; Tools</div>
+        <div class="feature-title">Drops into your IDE</div>
+        <div class="feature-desc">One command points Cursor, codex, opencode and friends at the mesh: <code
+            style="font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--gray-50);padding:1px 5px;border-radius:3px">parley launch codex</code>.
+          Their traffic stays on your network.</div>
+      </div>
+    </div>
+
+    <div class="aliases-strip fade-up" aria-label="Model aliases">
+      <div class="alias-card">
+        <div class="alias-name">parley:code</div>
+        <div class="alias-desc">Best available code model</div>
+      </div>
+      <div class="alias-card">
+        <div class="alias-name">parley:fast</div>
+        <div class="alias-desc">Smallest loaded model</div>
+      </div>
+      <div class="alias-card">
+        <div class="alias-name">parley:best</div>
+        <div class="alias-desc">Largest / most capable</div>
+      </div>
+      <div class="alias-card">
+        <div class="alias-name">parley:reason</div>
+        <div class="alias-desc">Best reasoning model</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="use-cases">
+    <p class="section-label fade-up">Use cases</p>
+    <h2 class="fade-up">Built for teams that<br>already own the hardware.</h2>
+    <p class="section-body fade-up">
+      The shapes where Parley fits cleanly &mdash; offices with mixed compute, regulated environments, and any team
+      tired of watching cloud AI bills grow faster than revenue.
+    </p>
+
+    <div class="usecases-grid fade-up">
+      <div class="usecase">
+        <div class="usecase-label">Engineering teams</div>
+        <div class="usecase-title">Point IDEs at one mesh</div>
+        <div class="usecase-desc">The Mac Studio in the corner hosts a 70B coding model on its unified memory; every
+          laptop on the floor uses it without copying weights. New hires install one binary and they're productive.
+        </div>
+      </div>
+      <div class="usecase">
+        <div class="usecase-label">Privacy-sensitive R&amp;D</div>
+        <div class="usecase-title">Inference inside the perimeter</div>
+        <div class="usecase-desc">Customer code, contracts, clinical notes, and internal docs never leave the network.
+          The same models you'd hit via a hosted API run on machines you own &mdash; compliance becomes a question of
+          physical hardware.</div>
+      </div>
+      <div class="usecase">
+        <div class="usecase-label">Mixed-hardware shops</div>
+        <div class="usecase-title">Use what you already have</div>
+        <div class="usecase-desc">Mac Minis, NVIDIA workstations, and the old laptop in someone's drawer all join one
+          cluster. Metal where it helps, CUDA where it helps, CPU for small models. The mesh routes to whichever has
+          capacity.</div>
+      </div>
+      <div class="usecase">
+        <div class="usecase-label">Air-gapped environments</div>
+        <div class="usecase-title">One download, peer transfers after</div>
+        <div class="usecase-desc">Once a single node has a model, every other node pulls it peer-to-peer across the LAN.
+          No outbound connections required &mdash; works for defence, finance, and shop floors with no internet egress.
+        </div>
+      </div>
+      <div class="usecase">
+        <div class="usecase-label">Cost control</div>
+        <div class="usecase-title">Inference costs that don't scale with usage</div>
+        <div class="usecase-desc">Inference now accounts for 55% of AI infrastructure spending and runs 15&ndash;20&times;
+          training costs over time. With Parley, your inference runs on hardware you already paid for &mdash; usage goes
+          up, the bill stays flat.</div>
+      </div>
+      <div class="usecase">
+        <div class="usecase-label">AI ROI</div>
+        <div class="usecase-title">Ship AI without the CFO conversation</div>
+        <div class="usecase-desc">Cloud AI spending is growing 60&ndash;80% year-over-year while revenue grows 16%. Parley
+          eliminates the largest line item by turning existing machines into the platform &mdash; no per-request pricing,
+          no surprise invoices.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="compare">
+    <p class="section-label fade-up">Comparison</p>
+    <h2 class="fade-up">How Parley fits in.</h2>
+    <p class="section-body fade-up">
+      Cloud API costs scale with every request. Single-machine tools cap out at one GPU. Parley is the missing
+      layer: multi-machine pooling that turns hardware you already own into a shared inference platform &mdash; flat
+      cost, no ceiling.
+    </p>
+
+    <div class="compare-wrap fade-up">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-parley">Parley</th>
+            <th>Ollama</th>
+            <th>LM Studio</th>
+            <th>Hosted APIs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Multi-machine mesh</td>
+            <td class="check">&#10003;</td>
+            <td class="cross">&mdash;</td>
+            <td class="cross">&mdash;</td>
+            <td class="cross">&mdash;</td>
+          </tr>
+          <tr>
+            <td>Auto-discovery</td>
+            <td class="check">&#10003;</td>
+            <td class="cross">&mdash;</td>
+            <td class="cross">&mdash;</td>
+            <td class="cross">&mdash;</td>
+          </tr>
+          <tr>
+            <td>Fair scheduling</td>
+            <td class="check">&#10003;</td>
+            <td class="cross">&mdash;</td>
+            <td class="cross">&mdash;</td>
+            <td class="partial">varies</td>
+          </tr>
+          <tr>
+            <td>Peer model transfer</td>
+            <td class="check">&#10003;</td>
+            <td class="cross">&mdash;</td>
+            <td class="cross">&mdash;</td>
+            <td class="cross">&mdash;</td>
+          </tr>
+          <tr>
+            <td>OpenAI API compatible</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+          </tr>
+          <tr>
+            <td>Built-in web UI</td>
+            <td class="check">&#10003;</td>
+            <td class="cross">&mdash;</td>
+            <td class="check">&#10003;</td>
+            <td class="partial">varies</td>
+          </tr>
+          <tr>
+            <td>TLS encryption</td>
+            <td class="check">&#10003;</td>
+            <td class="cross">&mdash;</td>
+            <td class="cross">&mdash;</td>
+            <td class="check">&#10003;</td>
+          </tr>
+          <tr>
+            <td>Data stays local</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+            <td class="cross">&mdash;</td>
+          </tr>
+          <tr>
+            <td>Team licensing</td>
+            <td class="check">&#10003;</td>
+            <td class="cross">&mdash;</td>
+            <td class="partial">business</td>
+            <td class="check">&#10003;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="pricing">
+    <p class="section-label fade-up">Pricing</p>
+    <h2 class="fade-up">Simple, transparent pricing.</h2>
+
+    <div class="pricing-grid fade-up">
+      <div class="price-card">
+        <p class="price-tier">Free</p>
+        <p class="price-amount">$0</p>
+        <p class="price-meta">Forever</p>
+        <ul class="price-features">
+          <li>Up to 3 nodes in your mesh</li>
+          <li>2 concurrent requests</li>
+          <li>Local LLM inference</li>
+          <li>Automatic model discovery</li>
+          <li>Community support</li>
+        </ul>
+        <a href="https://github.com/Iito/parley/releases" class="price-btn">Get started</a>
+      </div>
+
+      <div class="price-card featured">
+        <p class="price-tier">Custom</p>
+        <p class="price-amount">Custom</p>
+        <p class="price-meta">for your scale</p>
+        <ul class="price-features">
+          <li>Custom nodes</li>
+          <li>Higher concurrency limits</li>
+          <li>Priority support</li>
+          <li>Custom SLAs</li>
+        </ul>
+        <button class="price-btn price-btn-primary" onclick="openContactModal()">Contact sales</button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="faq">
+    <p class="section-label fade-up">FAQ</p>
+    <h2 class="fade-up">Common questions.</h2>
+
+    <div class="faq-list fade-up">
+      <div class="faq-item">
+        <button class="faq-question">
+          How is this different from Ollama?
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="faq-chevron">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Ollama runs on one machine. Parley pools many machines into one cluster with
+            smart routing, fair scheduling, an API gateway, a web UI, and team-grade trust and licensing. Parley ships its own inference
+            engine &mdash; it doesn't use Ollama as a backend.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          How is this different from LM Studio?
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="faq-chevron">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">LM Studio is a polished single-machine desktop app. Parley is for teams &mdash;
+            it pools multiple machines into one shared cluster with fair scheduling, automatic discovery, and encrypted
+            inter-node communication. The moment a second machine enters the picture, you need Parley.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          What hardware do I need?
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="faq-chevron">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Any modern machine. Apple Silicon Macs (M1 through M4 Ultra) are first-class
+            &mdash; Metal-accelerated with unified memory that lets you run larger models than discrete GPUs. NVIDIA
+            workstations with CUDA work great. CPU-only machines work for smaller models. Mix freely.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Will it work with my existing code?
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="faq-chevron">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. Set <code>OPENAI_BASE_URL</code> to any Parley node and your OpenAI SDK
+            code routes to the cluster. Ollama API clients work too &mdash; set <code>OLLAMA_HOST</code>. Coding tools
+            like Cursor, codex, and opencode can be connected with <code>parley launch &lt;tool&gt;</code>.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Is my data safe?
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="faq-chevron">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Your data never leaves your network. Parley doesn't phone home. No telemetry, no
+            usage reporting, no outbound connections except model downloads. All inference happens on machines you own.
+            For air-gapped environments, peer-to-peer model transfer means you can operate with zero internet access
+            after the initial download.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          What about latency &mdash; my GPU is in the next room?
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="faq-chevron">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">LAN latency is negligible compared to inference time. A 7B response that takes 4
+            seconds to generate doesn't notice a 1ms hop. The mesh prefers nodes that already have the model loaded, so
+            cross-machine routing only happens when there's a clear capacity reason.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Do I have to give up Ollama?
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="faq-chevron">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">No. Parley uses its own inference engine, <a href="https://github.com/Iito/spindll" target="_blank" rel="noopener" style="color:var(--teal-dark);text-decoration:none;border-bottom:1px solid var(--teal-border)">Spindll</a>, and doesn't depend on Ollama at all. <code>parley import --from-ollama</code>
+            reuses models already on disk so you don't re-download.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="get-started" style="padding-top: 0;">
+    <div class="install-section fade-up">
+      <p class="section-label">Get started</p>
+      <h2>One binary.<br>Every machine.</h2>
+      <p class="section-body">Install on each machine that has a GPU or fast CPU. They find each other automatically.*
+      </p>
+
+      <div class="install-options" style="grid-template-columns: 1fr 1fr;">
+        <div class="install-card">
+          <div class="install-card-title">
+            macOS
+            <span>DMG</span>
+          </div>
+          <div class="install-card-desc">
+            Apple Silicon (M1&ndash;M4 Ultra) and Intel. Drag to Applications &mdash; Parley appears in your menu bar.
+            Signed and notarized.
+          </div>
+          <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.1/Parley-0.6.0-beta.1-macOS.dmg" class="btn-download" style="margin-top: 16px;">Download</a>
+        </div>
+
+        <div class="install-card">
+          <div class="install-card-title">
+            Windows
+            <span>NSIS</span>
+          </div>
+          <div class="install-card-desc">
+            NVIDIA CUDA with GPU-specific builds. System tray launcher matching the macOS menu bar app.
+          </div>
+          <div style="margin-top: 16px;">
+            <select id="windows-version" style="width: 100%; padding: 10px 14px; background: #0d0d0c; border: 1px solid #333; border-radius: 6px; color: #ccc; font-family: 'IBM Plex Mono', monospace; font-size: 12px; cursor: pointer;">
+              <option value="">Select GPU architecture...</option>
+              <option value="https://github.com/Iito/parley/releases/download/v0.6.0-beta.1/Parley-0.6.0-beta.1-Windows-cuda-ampere-setup.exe">Ampere (RTX 30/40 series)</option>
+              <option value="https://github.com/Iito/parley/releases/download/v0.6.0-beta.1/Parley-0.6.0-beta.1-Windows-cuda-blackwell-setup.exe">Blackwell (RTX 50 series)</option>
+            </select>
+            <a id="windows-download" href="#" class="btn-download" style="margin-top: 12px; display: none;">Download</a>
+            <p id="windows-prompt" style="margin-top: 12px; font-size: 12px; color: #999;">Select your GPU architecture above</p>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const windowsSelect = document.getElementById('windows-version');
+        const windowsDownload = document.getElementById('windows-download');
+        const windowsPrompt = document.getElementById('windows-prompt');
+
+        windowsSelect.addEventListener('change', function() {
+          if (this.value) {
+            windowsDownload.href = this.value;
+            windowsDownload.style.display = 'inline-flex';
+            windowsPrompt.style.display = 'none';
+          } else {
+            windowsDownload.style.display = 'none';
+            windowsPrompt.style.display = 'block';
+          }
+        });
+      </script>
+
+
+      <p style="margin-top: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #555;">* Nodes must
+        be on the same LAN or subnet. No internet required.</p>
+
+      <div style="margin-top: 24px; border-top: 1px solid #2a2a2a; padding-top: 28px;">
+        <div class="install-card-title" style="margin-bottom: 12px;">Or from the command line</div>
+        <div class="code-block-wrap">
+          <button class="copy-btn">Copy</button>
+          <div class="code-block">
+            <span class="comment"># start the mesh (web UI + inference + gateway)</span>
+            <br>
+            parley serve
+            <br>
+            <br>
+            <span class="comment"># pull a model on any node (others get it peer-to-peer)</span>
+            <br>
+            parley pull qwen3-coder:30b
+            <br>
+            <br>
+            <span class="comment"># point your existing OpenAI SDK at the mesh</span>
+            <br>
+            export OPENAI_BASE_URL=http://localhost/v1
+            <br>
+            <br>
+            <span class="comment"># or drop your IDE in:</span>
+            <br>
+            parley launch codex --model parley:code
+            <br>
+            <br>
+            <span class="comment"># see who's online</span>
+            <br>
+            parley status
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">Parley</a>
+        <p class="footer-tagline">Local AI for teams.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-col-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#use-cases">Use cases</a></li>
+          <li><a href="#compare">Compare</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#get-started">Get started</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Open source</div>
+        <ul class="footer-col-links">
+          <li><a href="https://github.com/Iito/spindll" target="_blank" rel="noopener">Spindll engine</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Parley Team</span>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Mesh discovery animation ── */
+    (function () {
+      var meshEl = document.getElementById('mesh-diagram');
+      var nodes = [
+        document.getElementById('mnode-0'),
+        document.getElementById('mnode-1'),
+        document.getElementById('mnode-2')
+      ];
+      var statuses = [
+        document.getElementById('mstatus-0'),
+        document.getElementById('mstatus-1'),
+        document.getElementById('mstatus-2')
+      ];
+      var phases = [
+        document.getElementById('mphase-0'),
+        document.getElementById('mphase-1'),
+        document.getElementById('mphase-2')
+      ];
+      var models = [
+        document.getElementById('mmodels-0'),
+        document.getElementById('mmodels-1'),
+        document.getElementById('mmodels-2')
+      ];
+      var meshStatus = document.getElementById('mesh-status');
+      var connLines = {
+        '01': document.getElementById('conn-01'),
+        '02': document.getElementById('conn-02'),
+        '12': document.getElementById('conn-12')
+      };
+      var connDots = {
+        '01': document.getElementById('dot-01'),
+        '10': document.getElementById('dot-10'),
+        '02': document.getElementById('dot-02'),
+        '20': document.getElementById('dot-20'),
+        '12': document.getElementById('dot-12'),
+        '21': document.getElementById('dot-21')
+      };
+
+      function getCenter(el) {
+        var wrap = document.getElementById('mesh-diagram');
+        var wr = wrap.getBoundingClientRect();
+        var r = el.getBoundingClientRect();
+        return { x: r.left - wr.left + r.width / 2, y: r.top - wr.top + r.height / 2 };
+      }
+
+      function updateLines() {
+        var c = nodes.map(getCenter);
+        var pairs = [['01', 0, 1], ['02', 0, 2], ['12', 1, 2]];
+        pairs.forEach(function (p) {
+          var line = connLines[p[0]];
+          line.setAttribute('x1', c[p[1]].x);
+          line.setAttribute('y1', c[p[1]].y);
+          line.setAttribute('x2', c[p[2]].x);
+          line.setAttribute('y2', c[p[2]].y);
+        });
+      }
+
+      function animateDot(key, fromIdx, toIdx, duration, cb) {
+        var dot = connDots[key];
+        var from = getCenter(nodes[fromIdx]);
+        var to = getCenter(nodes[toIdx]);
+        dot.classList.add('show');
+        var start = performance.now();
+        function tick(now) {
+          var t = Math.min((now - start) / duration, 1);
+          var e = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+          dot.setAttribute('cx', from.x + (to.x - from.x) * e);
+          dot.setAttribute('cy', from.y + (to.y - from.y) * e);
+          if (t < 1) requestAnimationFrame(tick);
+          else { dot.classList.remove('show'); if (cb) cb(); }
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function reset() {
+        nodes.forEach(function (n) { n.classList.remove('booted', 'connected'); });
+        statuses.forEach(function (s) { s.className = 'mesh-node-status'; });
+        phases.forEach(function (p) { p.textContent = ''; p.className = 'mesh-node-phase'; });
+        models.forEach(function (m) { m.classList.remove('show'); });
+        Object.keys(connLines).forEach(function (k) { connLines[k].className.baseVal = 'mesh-conn-line'; });
+        Object.keys(connDots).forEach(function (k) { connDots[k].classList.remove('show'); });
+        meshStatus.textContent = '';
+        meshStatus.classList.remove('ready');
+      }
+
+      function runSequence() {
+        reset();
+        updateLines();
+
+        var timeline = [
+          // Node 0 boots
+          [300, function () {
+            nodes[0].classList.add('booted');
+            phases[0].textContent = 'booting...';
+          }],
+          [900, function () {
+            statuses[0].classList.add('discovering');
+            phases[0].textContent = 'listening on :4000';
+            meshStatus.textContent = '1 node';
+          }],
+
+          // Node 1 boots
+          [1800, function () {
+            nodes[1].classList.add('booted');
+            phases[1].textContent = 'booting...';
+          }],
+          [2400, function () {
+            statuses[1].classList.add('discovering');
+            phases[1].textContent = 'broadcasting...';
+            phases[0].textContent = 'peer discovered';
+          }],
+
+          // Handshake 0 <-> 1
+          [2900, function () {
+            updateLines();
+            connLines['01'].classList.add('drawing');
+            animateDot('01', 0, 1, 400);
+            phases[0].textContent = 'TLS handshake';
+            phases[1].textContent = 'TLS handshake';
+          }],
+          [3400, function () {
+            animateDot('10', 1, 0, 400);
+          }],
+          [3900, function () {
+            connLines['01'].classList.add('live');
+            statuses[0].className = 'mesh-node-status online';
+            statuses[1].className = 'mesh-node-status online';
+            phases[0].textContent = 'identity pinned';
+            phases[0].classList.add('teal');
+            phases[1].textContent = 'identity pinned';
+            phases[1].classList.add('teal');
+            meshStatus.textContent = '2 nodes';
+            window.dispatchEvent(new CustomEvent('parley-peer-joined', { detail: 'macmini' }));
+          }],
+
+          // Node 2 boots
+          [4800, function () {
+            nodes[2].classList.add('booted');
+            phases[2].textContent = 'booting...';
+            phases[0].textContent = 'connected';
+            phases[1].textContent = 'connected';
+          }],
+          [5400, function () {
+            statuses[2].classList.add('discovering');
+            phases[2].textContent = 'broadcasting...';
+            phases[0].textContent = 'new peer found';
+            phases[1].textContent = 'new peer found';
+          }],
+
+          // Handshake 0 <-> 2 and 1 <-> 2 simultaneously
+          [5900, function () {
+            updateLines();
+            connLines['02'].classList.add('drawing');
+            connLines['12'].classList.add('drawing');
+            animateDot('02', 0, 2, 400);
+            animateDot('12', 1, 2, 400);
+            phases[0].textContent = 'TLS handshake';
+            phases[1].textContent = 'TLS handshake';
+            phases[2].textContent = 'TLS handshake';
+          }],
+          [6400, function () {
+            animateDot('20', 2, 0, 400);
+            animateDot('21', 2, 1, 400);
+          }],
+          [6900, function () {
+            connLines['02'].classList.add('live');
+            connLines['12'].classList.add('live');
+            statuses[2].className = 'mesh-node-status online';
+            phases[0].textContent = 'connected';
+            phases[0].classList.add('teal');
+            phases[1].textContent = 'connected';
+            phases[1].classList.add('teal');
+            phases[2].textContent = 'identity pinned';
+            phases[2].classList.add('teal');
+            meshStatus.textContent = '3 nodes';
+            window.dispatchEvent(new CustomEvent('parley-peer-joined', { detail: 'ubuntu' }));
+          }],
+
+          // Show models, mark connected
+          [7500, function () {
+            nodes.forEach(function (n) { n.classList.add('connected'); });
+            models.forEach(function (m) { m.classList.add('show'); });
+            phases[0].textContent = 'probing models...';
+            phases[1].textContent = 'probing models...';
+            phases[2].textContent = 'probing models...';
+          }],
+
+          // Mesh ready
+          [8300, function () {
+            phases[0].textContent = '2 models registered';
+            phases[1].textContent = '2 models registered';
+            phases[2].textContent = '2 models registered';
+            meshStatus.textContent = 'mesh ready — 3 nodes, 6 models';
+            meshStatus.classList.add('ready');
+          }]
+        ];
+
+        timeline.forEach(function (step) {
+          setTimeout(step[1], step[0]);
+        });
+      }
+
+      var meshObs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          meshEl.classList.add('visible');
+          setTimeout(runSequence, 600);
+          meshObs.disconnect();
+        }
+      }, { threshold: 0.15 });
+      meshObs.observe(meshEl);
+    })();
+
+    document.querySelector('.nav-toggle').addEventListener('click', function () {
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+
+    var fadeEls = document.querySelectorAll('.fade-up');
+    var fadeObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    fadeEls.forEach(function (el) { fadeObs.observe(el); });
+
+    var cards = document.querySelectorAll('.feature-card');
+    var cardObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          cards.forEach(function (card, i) {
+            setTimeout(function () { card.classList.add('visible'); }, i * 80);
+          });
+          cardObs.disconnect();
+        }
+      });
+    }, { threshold: 0.1 });
+    if (cards.length) cardObs.observe(cards[0]);
+
+    var statNumbers = document.querySelectorAll('.stat-number[data-count]');
+    var statObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          statNumbers.forEach(function (el) {
+            if (el.dataset.static === 'true') return;
+            var target = parseFloat(el.dataset.count);
+            var suffix = el.dataset.suffix || '';
+            var duration = 1200;
+            var startTime = performance.now();
+            function tick(now) {
+              var elapsed = now - startTime;
+              var progress = Math.min(elapsed / duration, 1);
+              var eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = Math.round(target * eased) + suffix;
+              if (progress < 1) requestAnimationFrame(tick);
+              else el.textContent = target + suffix;
+            }
+            requestAnimationFrame(tick);
+          });
+          statObs.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    if (statNumbers.length) statObs.observe(statNumbers[0].closest('.stats-bar'));
+
+    document.querySelectorAll('.faq-question').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.parentElement;
+        var wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(function (el) { el.classList.remove('open'); });
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var lines = 'parley serve\nparley pull qwen3-coder:30b\nexport OPENAI_BASE_URL=http://localhost/v1\nparley launch codex --model parley:code\nparley status';
+        navigator.clipboard.writeText(lines).then(function () {
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 2000);
+        });
+      });
+    });
+
+    /* ── Data flow canvas animation ── */
+    (function () {
+      var canvas = document.getElementById('dataflow-canvas');
+      var ctx = canvas.getContext('2d');
+      var dpr = window.devicePixelRatio || 1;
+      var W, H;
+      var activeFlow = 'direct';
+      var animId = null;
+      var startTime = 0;
+      var teal = '#0d9488';
+      var tealGlow = 'rgba(13,148,136,';
+      var amber = '#f59e0b';
+      var amberGlow = 'rgba(245,158,11,';
+
+      function resize() {
+        var rect = canvas.getBoundingClientRect();
+        W = rect.width; H = rect.height;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function ease(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+
+      function lerp(a, b, t) { return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }; }
+
+      function bezier(p0, p1, p2, t) {
+        var u = 1 - t;
+        return {
+          x: u * u * p0.x + 2 * u * t * p1.x + t * t * p2.x,
+          y: u * u * p0.y + 2 * u * t * p1.y + t * t * p2.y
+        };
+      }
+
+      function ptOnPolyline(points, t) {
+        var segs = [];
+        var totalLen = 0;
+        for (var i = 1; i < points.length; i++) {
+          var dx = points[i].x - points[i - 1].x;
+          var dy = points[i].y - points[i - 1].y;
+          var len = Math.sqrt(dx * dx + dy * dy);
+          segs.push({ from: points[i - 1], to: points[i], len: len });
+          totalLen += len;
+        }
+        var target = t * totalLen;
+        var acc = 0;
+        for (var i = 0; i < segs.length; i++) {
+          if (acc + segs[i].len >= target) {
+            var local = (target - acc) / segs[i].len;
+            return lerp(segs[i].from, segs[i].to, local);
+          }
+          acc += segs[i].len;
+        }
+        return points[points.length - 1];
+      }
+
+      function drawPolyline(points, dashed) {
+        ctx.beginPath();
+        ctx.strokeStyle = '#2a2a2a';
+        ctx.lineWidth = 1.5;
+        if (dashed) ctx.setLineDash([4, 4]);
+        else ctx.setLineDash([]);
+        ctx.moveTo(points[0].x, points[0].y);
+        for (var i = 1; i < points.length; i++) {
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      function drawTokenStreamPoly(points, t, count, color, glowColor) {
+        for (var i = 0; i < count; i++) {
+          var tt = t - i * 0.06;
+          if (tt < 0 || tt > 1) continue;
+          var et = ease(tt);
+          var pt = ptOnPolyline(points, et);
+          var s = 2.5 - i * 0.25;
+          if (s < 1) s = 1;
+          ctx.beginPath();
+          ctx.shadowColor = glowColor + '0.5)';
+          ctx.shadowBlur = 8;
+          ctx.fillStyle = color;
+          ctx.arc(pt.x, pt.y, s, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      function drawNode(x, y, label, sub, glow, glowAmt) {
+        ctx.font = '500 11px IBM Plex Mono, monospace';
+        var labelW = ctx.measureText(label).width;
+        var subW = 0;
+        if (sub) {
+          ctx.font = '400 9px IBM Plex Mono, monospace';
+          subW = ctx.measureText(sub).width;
+        }
+        var bw = Math.max(labelW, subW) + 32;
+        var bh = sub ? 54 : 38;
+        var bx = x - bw / 2, by = y - bh / 2;
+
+        if (glow && glowAmt > 0) {
+          ctx.shadowColor = glow + '0.4)';
+          ctx.shadowBlur = 18 * glowAmt;
+          ctx.fillStyle = glow + (0.06 * glowAmt) + ')';
+          ctx.beginPath();
+          ctx.roundRect(bx - 4, by - 4, bw + 8, bh + 8, 10);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+
+        ctx.fillStyle = '#222';
+        ctx.strokeStyle = glow && glowAmt > 0.3 ? glow + '0.5)' : '#333';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(bx, by, bw, bh, 7);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#ddd';
+        ctx.font = '500 11px IBM Plex Mono, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, x, y + (sub ? -6 : 4));
+
+        if (sub) {
+          ctx.fillStyle = '#666';
+          ctx.font = '400 9px IBM Plex Mono, monospace';
+          ctx.fillText(sub, x, y + 10);
+        }
+      }
+
+      function drawPath(from, to, cp, dashed) {
+        ctx.beginPath();
+        ctx.strokeStyle = '#2a2a2a';
+        ctx.lineWidth = 1.5;
+        if (dashed) ctx.setLineDash([4, 4]);
+        else ctx.setLineDash([]);
+        if (cp) {
+          ctx.moveTo(from.x, from.y);
+          ctx.quadraticCurveTo(cp.x, cp.y, to.x, to.y);
+        } else {
+          ctx.moveTo(from.x, from.y);
+          ctx.lineTo(to.x, to.y);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      function drawParticle(x, y, color, glowColor, size, trail) {
+        if (trail && trail.length > 1) {
+          for (var i = 1; i < trail.length; i++) {
+            var a = (i / trail.length) * 0.4;
+            var r = (i / trail.length) * (size * 0.7);
+            ctx.beginPath();
+            ctx.fillStyle = glowColor + a + ')';
+            ctx.arc(trail[i].x, trail[i].y, r, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        ctx.shadowColor = glowColor + '0.7)';
+        ctx.shadowBlur = 14;
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.arc(x, y, size * 0.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawTokenStream(from, to, cp, t, count, color, glowColor) {
+        for (var i = 0; i < count; i++) {
+          var tt = t - i * 0.08;
+          if (tt < 0 || tt > 1) continue;
+          var et = ease(tt);
+          var pt = cp ? bezier(from, cp, to, et) : lerp(from, to, et);
+          var s = 2.5 - i * 0.3;
+          if (s < 1) s = 1;
+          ctx.beginPath();
+          ctx.shadowColor = glowColor + '0.5)';
+          ctx.shadowBlur = 8;
+          ctx.fillStyle = color;
+          ctx.arc(pt.x, pt.y, s, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      function drawStatusLabel(x, y, text, alpha, align) {
+        if (alpha <= 0) return;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = teal;
+        ctx.font = '500 9px IBM Plex Mono, monospace';
+        ctx.textAlign = align || 'center';
+        ctx.textBaseline = align ? 'middle' : 'alphabetic';
+        ctx.fillText(text, x, y);
+        ctx.textBaseline = 'alphabetic';
+        ctx.globalAlpha = 1;
+      }
+
+      // ── DIRECT FLOW ──
+      var directNodes, directPaths, directNarrow;
+      var directTargetName = 'macmini';
+      function setupDirect() {
+        directNarrow = W < 600;
+        if (directNarrow) {
+          var cx = W / 2;
+          directNodes = [
+            { x: cx, y: H * 0.16, label: 'workstation', sub: 'curl / SDK / IDE' },
+            { x: cx, y: H * 0.46, label: 'mesh', sub: 'gateway + scheduler' },
+            { x: cx, y: H * 0.76, label: directTargetName, sub: 'qwen3-coder:30b' }
+          ];
+          directPaths = [
+            { from: 0, to: 1, cp: null },
+            { from: 1, to: 2, cp: null },
+            { from: 2, to: 0, cp: { x: W - 24, y: H * 0.5 }, dashed: true, reverse: true }
+          ];
+        } else {
+          var m = W < 500 ? 0.6 : 1;
+          directNodes = [
+            { x: 80 * m, y: H * 0.45, label: 'workstation', sub: 'curl / SDK / IDE' },
+            { x: W * 0.5, y: H * 0.45, label: 'mesh', sub: 'gateway + scheduler' },
+            { x: W - 80 * m, y: H * 0.45, label: directTargetName, sub: 'qwen3-coder:30b' }
+          ];
+          directPaths = [
+            { from: 0, to: 1, cp: null },
+            { from: 1, to: 2, cp: null },
+            { from: 2, to: 0, cp: { x: W * 0.5, y: H * 0.84 }, dashed: true, reverse: true }
+          ];
+        }
+      }
+
+      function drawDirect(elapsed) {
+        setupDirect();
+        var cycle = 4500;
+        var t = (elapsed % cycle) / cycle;
+
+        directPaths.forEach(function (p) {
+          var f = directNodes[p.from], tt = directNodes[p.to];
+          drawPath(f, tt, p.cp, p.dashed);
+        });
+
+        var trail = [];
+        var nodeGlows = [0, 0, 0];
+        var statuses = ['', '', ''];
+
+        // Phase 1: ubuntu → mesh (0 - 0.17)
+        if (t < 0.17) {
+          var lt = ease(t / 0.17);
+          var pt = lerp(directNodes[0], directNodes[1], lt);
+          trail.push(pt);
+          if (trail.length > 8) trail.shift();
+          drawParticle(pt.x, pt.y, teal, tealGlow, 4.5, trail);
+          nodeGlows[0] = 1 - lt;
+          statuses[0] = 'sending...';
+        }
+        // Phase 2: mesh picks route (0.17 - 0.32)
+        else if (t < 0.32) {
+          var pulse = Math.sin((t - 0.17) / 0.15 * Math.PI * 3) * 0.5 + 0.5;
+          nodeGlows[1] = pulse;
+          statuses[1] = 'routing...';
+        }
+        // Phase 3: mesh → target (0.32 - 0.50)
+        else if (t < 0.50) {
+          var lt = ease((t - 0.32) / 0.18);
+          var pt = lerp(directNodes[1], directNodes[2], lt);
+          trail.push(pt);
+          if (trail.length > 8) trail.shift();
+          drawParticle(pt.x, pt.y, teal, tealGlow, 4.5, trail);
+          nodeGlows[1] = (1 - lt) * 0.5;
+          statuses[1] = '→ ' + directTargetName;
+        }
+        // Phase 4: target generating (0.50 - 0.68)
+        else if (t < 0.68) {
+          var pulse = Math.sin((t - 0.50) / 0.18 * Math.PI * 3) * 0.5 + 0.5;
+          nodeGlows[2] = pulse;
+          statuses[2] = 'generating...';
+        }
+        // Phase 5: token stream back (0.68 - 0.95)
+        else if (t < 0.95) {
+          var lt = (t - 0.68) / 0.27;
+          var p = directPaths[2];
+          drawTokenStream(directNodes[2], directNodes[0], p.cp, lt, 6, teal, tealGlow);
+          nodeGlows[2] = 0.3;
+          nodeGlows[0] = lt > 0.5 ? (lt - 0.5) * 2 : 0;
+          statuses[2] = 'streaming';
+          if (lt > 0.4) statuses[0] = Math.floor(lt * 180) + ' tokens';
+        }
+
+        directNodes.forEach(function (n, i) {
+          drawNode(n.x, n.y, n.label, n.sub, tealGlow, nodeGlows[i]);
+        });
+
+        directNodes.forEach(function (n, i) {
+          if (directNarrow) {
+            // Place status to the left of each node so it doesn't sit on the path
+            drawStatusLabel(n.x - 90, n.y, statuses[i], statuses[i] ? 1 : 0, 'right');
+          } else {
+            drawStatusLabel(n.x, n.y + 38, statuses[i], statuses[i] ? 1 : 0);
+          }
+        });
+
+        // Caption
+        ctx.fillStyle = '#555';
+        ctx.font = '400 10px IBM Plex Mono, monospace';
+        ctx.textAlign = 'center';
+        var caption = directNarrow
+          ? 'Route → infer → stream'
+          : 'Request → smart route → inference → stream tokens back';
+        ctx.fillText(caption, W / 2, H - 12);
+      }
+
+      // ── ORCHESTRATED FLOW ──
+      var orchNodes, orchPaths, orchNarrow;
+      function setupOrch() {
+        orchNarrow = W < 600;
+        if (orchNarrow) {
+          var cx = W / 2;
+          orchNodes = [
+            { x: cx, y: H * 0.12, label: 'workstation', sub: 'complex task' },
+            { x: cx, y: H * 0.36, label: 'Planner', sub: 'decompose + merge' },
+            { x: W * 0.26, y: H * 0.66, label: 'ubuntu', sub: 'code model' },
+            { x: W * 0.74, y: H * 0.66, label: 'macmini', sub: 'reason model' }
+          ];
+          orchPaths = {
+            cpWS: { x: W * 0.26, y: H * 0.50 },
+            cpMM: { x: W * 0.74, y: H * 0.50 }
+          };
+        } else {
+          var m = W < 500 ? 0.55 : 1;
+          orchNodes = [
+            { x: 60 * m, y: H * 0.45, label: 'workstation', sub: 'complex task' },
+            { x: W * 0.35, y: H * 0.45, label: 'Planner', sub: 'decompose + merge' },
+            { x: W - 70 * m, y: H * 0.2, label: 'ubuntu', sub: 'code model' },
+            { x: W - 70 * m, y: H * 0.7, label: 'macmini', sub: 'reason model' }
+          ];
+          orchPaths = {
+            cpWS: { x: W * 0.52, y: H * 0.2 },
+            cpMM: { x: W * 0.52, y: H * 0.7 }
+          };
+        }
+      }
+
+      function drawOrch(elapsed) {
+        setupOrch();
+        var cycle = 5500;
+        var t = (elapsed % cycle) / cycle;
+        var nodeGlows = [0, 0, 0, 0];
+        var statuses = ['', '', '', ''];
+
+        // Draw paths
+        drawPath(orchNodes[0], orchNodes[1], null);
+        drawPath(orchNodes[1], orchNodes[2], orchPaths.cpWS);
+        drawPath(orchNodes[1], orchNodes[3], orchPaths.cpMM);
+
+        // Phase 1: ubuntu → Planner (0 - 0.12)
+        if (t < 0.12) {
+          var lt = ease(t / 0.12);
+          var pt = lerp(orchNodes[0], orchNodes[1], lt);
+          drawParticle(pt.x, pt.y, teal, tealGlow, 4.5, [pt]);
+          nodeGlows[0] = 1 - lt;
+          statuses[0] = 'sending...';
+        }
+        // Phase 2: Planner thinking (0.12 - 0.25)
+        else if (t < 0.25) {
+          var pulse = Math.sin((t - 0.12) / 0.13 * Math.PI * 4) * 0.5 + 0.5;
+          nodeGlows[1] = pulse;
+          statuses[1] = 'planning...';
+        }
+        // Phase 3: Fan-out to both nodes (0.25 - 0.42)
+        else if (t < 0.42) {
+          var lt = ease((t - 0.25) / 0.17);
+          var ptA = bezier(orchNodes[1], orchPaths.cpWS, orchNodes[2], lt);
+          var ptB = bezier(orchNodes[1], orchPaths.cpMM, orchNodes[3], lt);
+          drawParticle(ptA.x, ptA.y, teal, tealGlow, 4, [ptA]);
+          drawParticle(ptB.x, ptB.y, amber, amberGlow, 4, [ptB]);
+          nodeGlows[1] = 0.3;
+          statuses[1] = '2 steps';
+        }
+        // Phase 4: Both nodes generating — macmini finishes early (0.42 - 0.64)
+        else if (t < 0.64) {
+          var sub = (t - 0.42) / 0.22;
+          // workstation takes the full duration
+          var pulseA = Math.sin(sub * Math.PI * 6) * 0.5 + 0.5;
+          nodeGlows[2] = pulseA;
+          statuses[2] = 'step 1...';
+          // macmini finishes at ~60% of this phase
+          if (sub < 0.6) {
+            var pulseB = Math.sin(sub * Math.PI * 5 + 1) * 0.5 + 0.5;
+            nodeGlows[3] = pulseB;
+            statuses[3] = 'step 2...';
+          } else {
+            statuses[3] = 'done';
+            nodeGlows[3] = 0;
+          }
+        }
+        // Phase 5a: macmini returns to Planner while workstation still generating (0.64 - 0.72)
+        else if (t < 0.72) {
+          var lt = ease((t - 0.64) / 0.08);
+          var ptB = bezier(orchNodes[3], orchPaths.cpMM, orchNodes[1], lt);
+          drawParticle(ptB.x, ptB.y, amber, amberGlow, 3.5, [ptB]);
+          nodeGlows[3] = 1 - lt;
+          statuses[3] = 'done';
+          // workstation still generating
+          var pulse = Math.sin((t - 0.64) / 0.08 * Math.PI * 3) * 0.5 + 0.5;
+          nodeGlows[2] = pulse;
+          statuses[2] = 'step 1...';
+          statuses[1] = 'waiting...';
+          nodeGlows[1] = 0.2;
+        }
+        // Phase 5b: Planner waiting for workstation (0.72 - 0.78)
+        else if (t < 0.78) {
+          var pulse = Math.sin((t - 0.72) / 0.06 * Math.PI * 3) * 0.5 + 0.5;
+          nodeGlows[2] = pulse;
+          statuses[2] = 'step 1...';
+          nodeGlows[1] = 0.15;
+          statuses[1] = 'waiting...';
+        }
+        // Phase 5c: workstation finishes, returns to Planner (0.78 - 0.84)
+        else if (t < 0.84) {
+          var lt = ease((t - 0.78) / 0.06);
+          var ptA = bezier(orchNodes[2], orchPaths.cpWS, orchNodes[1], lt);
+          drawParticle(ptA.x, ptA.y, teal, tealGlow, 3.5, [ptA]);
+          nodeGlows[2] = 1 - lt;
+          statuses[2] = 'done';
+          statuses[1] = 'receiving...';
+          nodeGlows[1] = 0.3;
+        }
+        // Phase 6: Planner merges (0.84 - 0.88)
+        else if (t < 0.88) {
+          var pulse = Math.sin((t - 0.84) / 0.04 * Math.PI * 3) * 0.5 + 0.5;
+          nodeGlows[1] = pulse;
+          statuses[1] = 'merging...';
+        }
+        // Phase 7: Token stream Planner → ubuntu (0.88 - 0.97)
+        else if (t < 0.97) {
+          var lt = (t - 0.88) / 0.09;
+          drawTokenStream(orchNodes[1], orchNodes[0], null, lt, 8, teal, tealGlow);
+          nodeGlows[1] = 0.3;
+          nodeGlows[0] = lt > 0.4 ? (lt - 0.4) * 1.6 : 0;
+          statuses[1] = 'streaming';
+          if (lt > 0.3) statuses[0] = Math.floor(lt * 240) + ' tokens';
+        }
+
+        orchNodes.forEach(function (n, i) {
+          drawNode(n.x, n.y, n.label, n.sub, i === 3 ? amberGlow : tealGlow, nodeGlows[i]);
+        });
+
+        orchNodes.forEach(function (n, i) {
+          if (orchNarrow) {
+            // ubuntu + Planner: status to the right; workstation + macmini: below
+            if (i === 0 || i === 1) {
+              drawStatusLabel(n.x + 90, n.y, statuses[i], statuses[i] ? 1 : 0, 'left');
+            } else {
+              drawStatusLabel(n.x, n.y + 38, statuses[i], statuses[i] ? 1 : 0);
+            }
+          } else {
+            drawStatusLabel(n.x, n.y + 38, statuses[i], statuses[i] ? 1 : 0);
+          }
+        });
+
+        ctx.fillStyle = '#555';
+        ctx.font = '400 10px IBM Plex Mono, monospace';
+        ctx.textAlign = 'center';
+        var caption = orchNarrow
+          ? 'Decompose → parallel → merge → stream'
+          : 'Planner decomposes → parallel execution → merge → stream back';
+        ctx.fillText(caption, W / 2, H - 12);
+      }
+
+      var dfCycleCount = 0;
+
+      function frame(now) {
+        if (!startTime) startTime = now;
+        var elapsed = now - startTime;
+        var cycle = activeFlow === 'direct' ? 4500 : 5500;
+
+        ctx.clearRect(0, 0, W, H);
+
+        if (elapsed >= cycle) {
+          dfCycleCount++;
+          if (activeFlow === 'direct') drawDirect(cycle - 1);
+          else drawOrch(cycle - 1);
+          return;
+        }
+
+        if (activeFlow === 'direct') drawDirect(elapsed);
+        else drawOrch(elapsed);
+
+        animId = requestAnimationFrame(frame);
+      }
+
+      function start() {
+        if (animId) cancelAnimationFrame(animId);
+        startTime = 0;
+        animId = requestAnimationFrame(frame);
+      }
+
+      document.querySelectorAll('.dataflow-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          activeFlow = tab.dataset.flow;
+          document.querySelectorAll('.dataflow-tab').forEach(function (t) { t.classList.remove('active'); });
+          tab.classList.add('active');
+          start();
+        });
+      });
+
+      window.addEventListener('parley-peer-joined', function (e) {
+        if (dfCycleCount >= 2) return;
+        directTargetName = e.detail;
+        start();
+      });
+
+      var dfEl = document.getElementById('dataflow');
+      var dfObs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          dfEl.classList.add('visible');
+        }
+      }, { threshold: 0.15 });
+      dfObs.observe(dfEl);
+    })();
+  </script>
+
+  <script type="module">
+    // Fetch latest version
+    const versionBadge = document.getElementById('version-badge');
+    if (versionBadge) {
+      fetch('https://api.github.com/repos/Iito/parley/releases')
+        .then(r => r.json())
+        .then(data => {
+          if (data.length > 0) {
+            const version = data[0].tag_name || data[0].name || 'Latest';
+            const url = data[0].html_url;
+            versionBadge.href = url;
+            versionBadge.textContent = version;
+          } else {
+            throw new Error('No releases found');
+          }
+        })
+        .catch(() => {
+          versionBadge.textContent = 'Download';
+          versionBadge.href = 'https://github.com/Iito/parley/releases';
+        });
+    }
+  </script>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeContactModal()">&times;</button>
+      <h2>Get in touch</h2>
+      <p class="modal-subtitle">Tell us about your infrastructure needs.</p>
+      <form id="contactForm" onsubmit="submitContactForm(event)">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company">
+        </div>
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send</button>
+      </form>
+      <div id="formStatus"></div>
+    </div>
+  </div>
+
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: var(--white);
+      padding: 40px;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: var(--gray-400);
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      color: var(--black);
+    }
+
+    .modal-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--black);
+    }
+
+    .modal-subtitle {
+      font-size: 14px;
+      color: var(--gray-500);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--black);
+      background: var(--white);
+      transition: border-color 0.15s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--teal);
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 12px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .form-submit:hover {
+      opacity: 0.8;
+    }
+
+    .form-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #formStatus {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 6px;
+      display: none;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    #formStatus.success {
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      display: block;
+    }
+
+    #formStatus.error {
+      background: #fef2f2;
+      color: #dc2626;
+      display: block;
+    }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDf_kpXI0jpDEjrWAiZUedqXY4RN9jTTtA",
+      authDomain: "lmparley.firebaseapp.com",
+      projectId: "lmparley",
+      storageBucket: "lmparley.firebasestorage.app",
+      messagingSenderId: "424181381487",
+      appId: "1:424181381487:web:a363cbe70aa0012bded09a"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.openContactModal = function() {
+      document.getElementById('contactModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeContactModal = function() {
+      document.getElementById('contactModal').classList.remove('open');
+      document.body.style.overflow = '';
+      document.getElementById('contactForm').reset();
+      document.getElementById('formStatus').textContent = '';
+      document.getElementById('formStatus').classList.remove('success', 'error');
+    };
+
+    window.submitContactForm = async function(e) {
+      e.preventDefault();
+
+      const submitBtn = document.querySelector('.form-submit');
+      const statusDiv = document.getElementById('formStatus');
+
+      submitBtn.disabled = true;
+      statusDiv.textContent = 'Sending...';
+      statusDiv.classList.remove('success', 'error');
+      statusDiv.style.display = 'block';
+
+      try {
+        const formData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          company: document.getElementById('company').value || '',
+          message: document.getElementById('message').value,
+          timestamp: new Date().toISOString()
+        };
+
+        await addDoc(collection(db, 'contact_submissions'), formData);
+
+        statusDiv.textContent = 'Thank you! We\'ll be in touch soon.';
+        statusDiv.classList.add('success');
+        document.getElementById('contactForm').reset();
+
+        setTimeout(() => {
+          closeContactModal();
+        }, 2000);
+      } catch (error) {
+        statusDiv.textContent = 'Error sending message. Please try again.';
+        statusDiv.classList.add('error');
+        console.error('Error:', error);
+      } finally {
+        submitBtn.disabled = false;
+      }
+    };
+
+    document.getElementById('contactModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeContactModal();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

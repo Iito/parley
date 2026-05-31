@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help & Troubleshooting — Parley Documentation</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #fafaf8;
+      --gray-50: #f4f4f2;
+      --gray-100: #ececea;
+      --gray-200: #e0dfdb;
+      --gray-400: #94928c;
+      --gray-500: #706e68;
+      --gray-600: #57554f;
+      --gray-800: #2c2a26;
+      --black: #1a1917;
+      --teal: #0d9488;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--black);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray-500);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--black);
+    }
+
+    .nav-cta {
+      background: var(--black) !important;
+      color: var(--white) !important;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .doc-nav {
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--off-white);
+      padding: 0;
+      position: sticky;
+      top: 60px;
+      z-index: 99;
+    }
+
+    .doc-nav-content {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+    }
+
+    .doc-nav a {
+      flex: 1;
+      padding: 16px 24px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-500);
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s;
+      text-align: center;
+    }
+
+    .doc-nav a:hover {
+      color: var(--black);
+      background: var(--gray-50);
+    }
+
+    .doc-nav a.active {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px 80px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 32px;
+      color: var(--black);
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 16px;
+      color: var(--black);
+      border-top: 1px solid var(--gray-200);
+      padding-top: 24px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      color: var(--black);
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: var(--gray-800);
+    }
+
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      color: var(--gray-800);
+    }
+
+    code {
+      background: var(--gray-50);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--gray-800);
+    }
+
+    strong {
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 80px 20px 60px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+
+      .nav-links a {
+        font-size: 13px;
+      }
+
+      .doc-nav a {
+        padding: 12px 16px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="/logo-64.png" alt="Parley" width="28" height="28" style="border-radius:0px;" />
+      arley
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/docs.html">Docs</a></li>
+      <li><a href="https://github.com/Iito/parley/releases" target="_blank" rel="noopener" class="nav-cta">Download</a></li>
+    </ul>
+  </nav>
+
+  <div class="doc-nav">
+    <div class="doc-nav-content">
+      <a href="manual.html">Manual</a>
+      <a href="api.html">API Reference</a>
+      <a href="help.html" class="active">Help & Troubleshooting</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Help & Troubleshooting</h1>
+
+    <h2>Common Issues</h2>
+
+    <h3>"No model selected" error</h3>
+    <p>Click the gear icon and download a model (e.g., <code>llama3.1:8b</code>). Takes 1-5 minutes depending on model size.</p>
+
+    <h3>Mesh shows "local mode" instead of "connected"</h3>
+    <ul>
+      <li>Are other nodes running on the same network?</li>
+      <li>Check firewall allows port 45892 (mDNS)</li>
+      <li>Ensure all nodes use the same cookie: check <code>~/.parley.yaml</code></li>
+      <li>Try restarting nodes: <code>pkill parley</code> then <code>parley serve</code></li>
+    </ul>
+
+    <h3>Response is very slow</h3>
+    <ul>
+      <li>Model may still be loading (first inference loads model into memory)</li>
+      <li>Check node status in graph view</li>
+      <li>Run smaller model: use <code>parley:fast</code> alias</li>
+      <li>If using remote node, check network latency</li>
+    </ul>
+
+    <h3>High memory usage</h3>
+    <ul>
+      <li>Each loaded model consumes memory (7B model ≈ 4-6GB, 13B ≈ 8-10GB)</li>
+      <li>Unload unused models via the models panel (gear icon)</li>
+      <li>Check <code>/api/ps</code> to see what's loaded</li>
+      <li>Use smaller models or quantized versions</li>
+    </ul>
+
+    <h3>"Connection refused" when accessing from another machine</h3>
+    <ul>
+      <li>By default, Parley binds to localhost only</li>
+      <li>To access from network, it listens on your machine's IP (shown on startup)</li>
+      <li>Check firewall allows port 80 or 3000</li>
+      <li>Try direct IP: <code>http://192.168.x.x:3000</code></li>
+    </ul>
+
+    <h3>Model download fails or is stuck</h3>
+    <ul>
+      <li>Check internet connection and GitHub/HuggingFace access</li>
+      <li>Cancel and retry: click the "cancel" button in the models panel</li>
+      <li>Try a smaller model first to test download</li>
+      <li>Check disk space (models can be 5-50GB each)</li>
+    </ul>
+
+    <h2>Performance Tips</h2>
+    <ul>
+      <li><strong>GPU acceleration</strong> — Use CUDA (NVIDIA) or Metal (Apple Silicon) for faster inference</li>
+      <li><strong>Model quantization</strong> — Q4 models are 3-4x faster than FP16, minimal quality loss</li>
+      <li><strong>Keep models local</strong> — Avoid repeated downloads by using <code>parley import --from-ollama</code></li>
+      <li><strong>Monitor loaded models</strong> — Mesh graphs show which models are on which nodes</li>
+    </ul>
+
+    <h2>Getting Help</h2>
+    <ul>
+      <li><strong>Check documentation</strong> — See the docs pages above</li>
+      <li><strong>View logs</strong> — <code>~/.parley/logs/</code></li>
+      <li><strong>GitHub Issues</strong> — Report bugs at github.com/Iito/parley</li>
+      <li><strong>Status endpoint</strong> — <code>curl http://localhost:4000/health</code></li>
+    </ul>
+
+    <h2>Keyboard Shortcuts</h2>
+    <ul>
+      <li><code>Enter</code> — Send message</li>
+      <li><code>Shift+Enter</code> — Newline in message</li>
+      <li><code>Cmd/Ctrl+C</code> — Cancel streaming response</li>
+    </ul>
+  </div>
+
+  <script>
+    const currentPage = window.location.pathname.split('/').pop() || 'help.html';
+    document.querySelectorAll('.doc-nav a').forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

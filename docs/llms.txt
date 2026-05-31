@@ -1,0 +1,35 @@
+# Parley
+
+> Local AI inference mesh for teams. One binary turns your machines into a shared on-premise LLM cluster.
+
+Parley pools Apple Silicon Macs, NVIDIA workstations, and spare hardware into a single inference mesh. Models loaded on any node are usable from every node. Peer-to-peer model transfer means one download serves the whole team. Zero config, zero cloud, zero data leaks.
+
+## Key facts
+
+- Single binary for macOS, Linux, and Windows
+- Ships its own Rust inference engine (Spindll): https://github.com/Iito/spindll
+- GGUF via llama.cpp, native MLX on Apple Silicon, CUDA and Vulkan on NVIDIA
+- OpenAI and Ollama API compatible — set one env var and existing tools work
+- Auto-discovery on LAN, TLS encryption between every node
+- Smart routing: requests go to the node with the model in memory and shortest queue
+- Fair scheduling: per-user request queuing prevents any single user from monopolizing the cluster
+- Model aliases: parley:code, parley:fast, parley:best, parley:reason
+- Built-in web UI for mesh status and chat
+- Free tier: up to 3 nodes
+
+## Use cases
+
+- Engineering teams sharing a large coding model across laptops
+- Privacy-sensitive R&D where data must stay on-network
+- Mixed-hardware offices (Metal, CUDA, CPU) pooled into one cluster
+- Air-gapped environments with peer-to-peer model transfer
+- Cost control: inference on hardware you already own, no per-request pricing
+
+## Links
+
+- Website: https://lmparley.com
+- Spindll engine: https://github.com/Iito/spindll
+
+## Contact
+
+- Waitlist: https://lmparley.com/#get-started

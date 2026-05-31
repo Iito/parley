@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation — Parley</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #fafaf8;
+      --gray-50: #f4f4f2;
+      --gray-100: #ececea;
+      --gray-200: #e0dfdb;
+      --gray-400: #94928c;
+      --gray-500: #706e68;
+      --gray-600: #57554f;
+      --gray-800: #2c2a26;
+      --black: #1a1917;
+      --teal: #0d9488;
+      --teal-dark: #0f766e;
+      --teal-light: #f0fdfa;
+      --teal-border: #99f6e4;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--black);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray-500);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--black);
+    }
+
+    .nav-cta {
+      background: var(--black) !important;
+      color: var(--white) !important;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 160px 40px 80px;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--black);
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: var(--gray-500);
+      margin-bottom: 48px;
+    }
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .doc-card {
+      padding: 32px;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .doc-card:hover {
+      border-color: var(--teal);
+      background: var(--teal-light);
+      transform: translateY(-4px);
+    }
+
+    .doc-card h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    .doc-card p {
+      font-size: 14px;
+      color: var(--gray-500);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 120px 20px 60px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+
+      .nav-links a {
+        font-size: 13px;
+      }
+
+      .docs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="/logo-64.png" alt="Parley" width="28" height="28" style="border-radius:0px;" />
+      arley
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#features">Features</a></li>
+      <li><a href="/#use-cases">Use cases</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="https://github.com/Iito/parley/releases" target="_blank" rel="noopener" class="nav-cta">Download</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Documentation</h1>
+    <p class="subtitle">Learn how to use Parley, understand the API, and troubleshoot common issues.</p>
+
+    <div class="docs-grid">
+      <a href="manual.html" class="doc-card">
+        <h2>Manual</h2>
+        <p>Getting started, model management, configuration, and web UI basics.</p>
+      </a>
+
+      <a href="api.html" class="doc-card">
+        <h2>API Reference</h2>
+        <p>OpenAI compatible, Ollama compatible, and mesh native API endpoints.</p>
+      </a>
+
+      <a href="help.html" class="doc-card">
+        <h2>Help & Troubleshooting</h2>
+        <p>Common issues, performance tips, and keyboard shortcuts.</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
