@@ -1591,7 +1591,7 @@
       Zero config, zero cloud, zero data leaks.
     </p>
     <div class="hero-actions">
-      <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.1/Parley-0.6.0-beta.1-macOS.dmg" class="btn-primary">
+      <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-macOS.dmg" class="btn-primary">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
           <polyline points="7 10 12 15 17 10" />
@@ -1599,9 +1599,9 @@
         </svg>
         Download for macOS
       </a>
-      <a href="#get-started" class="btn-secondary">Windows & more →</a>
+      <a href="#get-started" class="btn-secondary">Windows, Linux & more →</a>
     </div>
-    <p class="hero-meta">macOS &nbsp;&middot;&nbsp; Windows &nbsp;&middot;&nbsp; <span style="color: var(--gray-400);">Linux coming soon</span></p>
+    <p class="hero-meta">macOS &nbsp;&middot;&nbsp; Windows &nbsp;&middot;&nbsp; Linux</p>
   </div>
 
   <div class="mesh-diagram-wrap">
@@ -2161,17 +2161,22 @@
       <p class="section-body">Install on each machine that has a GPU or fast CPU. They find each other automatically.*
       </p>
 
-      <div class="install-options" style="grid-template-columns: 1fr 1fr;">
+      <div class="install-options" style="grid-template-columns: 1fr 1fr 1fr;">
         <div class="install-card">
           <div class="install-card-title">
             macOS
             <span>DMG</span>
           </div>
           <div class="install-card-desc">
-            Apple Silicon (M1&ndash;M4 Ultra) and Intel. Drag to Applications &mdash; Parley appears in your menu bar.
-            Signed and notarized.
+            Apple Silicon (M1&ndash;M4 Ultra) with native Metal + MLX. Drag to Applications &mdash; Parley appears
+            in your menu bar.
           </div>
-          <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.1/Parley-0.6.0-beta.1-macOS.dmg" class="btn-download" style="margin-top: 16px;">Download</a>
+          <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-macOS.dmg" class="btn-download" style="margin-top: 16px;">Download &mdash; Metal + MLX</a>
+          <div style="margin-top: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 2.1;">
+            <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-macOS-cpu.dmg" style="display: block; color: var(--teal-dark); text-decoration: none;">CPU-only &mdash; Intel</a>
+            <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-macOS-lite-arm64.dmg" style="display: block; color: var(--teal-dark); text-decoration: none;">Lite &mdash; Apple Silicon</a>
+            <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-macOS-lite-intel.dmg" style="display: block; color: var(--teal-dark); text-decoration: none;">Lite &mdash; Intel</a>
+          </div>
         </div>
 
         <div class="install-card">
@@ -2180,36 +2185,41 @@
             <span>NSIS</span>
           </div>
           <div class="install-card-desc">
-            NVIDIA CUDA with GPU-specific builds. System tray launcher matching the macOS menu bar app.
+            One installer for every NVIDIA GPU &mdash; GTX 10 series through RTX 50 series. System tray launcher
+            matching the macOS menu bar app.
           </div>
-          <div style="margin-top: 16px;">
-            <select id="windows-version" style="width: 100%; padding: 10px 14px; background: #0d0d0c; border: 1px solid #333; border-radius: 6px; color: #ccc; font-family: 'IBM Plex Mono', monospace; font-size: 12px; cursor: pointer;">
-              <option value="">Select GPU architecture...</option>
-              <option value="https://github.com/Iito/parley/releases/download/v0.6.0-beta.1/Parley-0.6.0-beta.1-Windows-cuda-ampere-setup.exe">Ampere (RTX 30/40 series)</option>
-              <option value="https://github.com/Iito/parley/releases/download/v0.6.0-beta.1/Parley-0.6.0-beta.1-Windows-cuda-blackwell-setup.exe">Blackwell (RTX 50 series)</option>
-            </select>
-            <a id="windows-download" href="#" class="btn-download" style="margin-top: 12px; display: none;">Download</a>
-            <p id="windows-prompt" style="margin-top: 12px; font-size: 12px; color: #999;">Select your GPU architecture above</p>
+          <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-Windows-cuda-all-setup.exe" class="btn-download" style="margin-top: 16px;">Download &mdash; CUDA</a>
+          <div style="margin-top: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 2.1;">
+            <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-Windows-cpu-setup.exe" style="display: block; color: var(--teal-dark); text-decoration: none;">CPU-only</a>
+            <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-Windows-lite-setup.exe" style="display: block; color: var(--teal-dark); text-decoration: none;">Lite</a>
+          </div>
+        </div>
+
+        <div class="install-card">
+          <div class="install-card-title">
+            Linux
+            <span>AppImage</span>
+          </div>
+          <div class="install-card-desc">
+            One AppImage for every NVIDIA GPU &mdash; GTX 10 series through RTX 50 series. <code>chmod +x</code>
+            and run; nothing else to install.
+          </div>
+          <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-cuda-all-linux-x86_64.AppImage" class="btn-download" style="margin-top: 16px;">Download &mdash; CUDA</a>
+          <div style="margin-top: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 2.1;">
+            <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-cpu-linux-x86_64.AppImage" style="display: block; color: var(--teal-dark); text-decoration: none;">CPU-only &mdash; x86_64</a>
+            <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-lite-linux-x86_64.AppImage" style="display: block; color: var(--teal-dark); text-decoration: none;">Lite &mdash; x86_64</a>
+            <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-lite-linux-aarch64.AppImage" style="display: block; color: var(--teal-dark); text-decoration: none;">Lite &mdash; arm64</a>
           </div>
         </div>
       </div>
 
-      <script>
-        const windowsSelect = document.getElementById('windows-version');
-        const windowsDownload = document.getElementById('windows-download');
-        const windowsPrompt = document.getElementById('windows-prompt');
-
-        windowsSelect.addEventListener('change', function() {
-          if (this.value) {
-            windowsDownload.href = this.value;
-            windowsDownload.style.display = 'inline-flex';
-            windowsPrompt.style.display = 'none';
-          } else {
-            windowsDownload.style.display = 'none';
-            windowsPrompt.style.display = 'block';
-          }
-        });
-      </script>
+      <div class="install-card-desc" style="margin-top: 24px; border-top: 1px solid #2a2a2a; padding-top: 20px;">
+        <strong>GPU</strong> (CUDA / Metal + MLX) &mdash; full local inference, hardware-accelerated.
+        <strong>CPU-only</strong> &mdash; full local inference on the processor, for Xeon/EPYC-class servers or
+        machines without a supported GPU. <strong>Lite</strong> &mdash; tiny client with no local inference: it
+        joins the mesh and routes every request to your other machines &mdash; perfect for old laptops,
+        Raspberry Pi, and Intel Macs.
+      </div>
 
 
       <p style="margin-top: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #555;">* Nodes must
