@@ -1591,13 +1591,13 @@
       Zero config, zero cloud, zero data leaks.
     </p>
     <div class="hero-actions">
-      <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-macOS.dmg" class="btn-primary">
+      <a href="https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-macOS.dmg" class="btn-primary" id="hero-download">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
           <polyline points="7 10 12 15 17 10" />
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
-        Download for macOS
+        <span id="hero-download-label">Download for macOS</span>
       </a>
       <a href="#get-started" class="btn-secondary">Windows, Linux & more →</a>
     </div>
@@ -2162,7 +2162,7 @@
       </p>
 
       <div class="install-options" style="grid-template-columns: 1fr 1fr 1fr;">
-        <div class="install-card">
+        <div class="install-card" data-platform="mac">
           <div class="install-card-title">
             macOS
             <span>DMG</span>
@@ -2179,7 +2179,7 @@
           </div>
         </div>
 
-        <div class="install-card">
+        <div class="install-card" data-platform="windows">
           <div class="install-card-title">
             Windows
             <span>NSIS</span>
@@ -2195,7 +2195,7 @@
           </div>
         </div>
 
-        <div class="install-card">
+        <div class="install-card" data-platform="linux">
           <div class="install-card-title">
             Linux
             <span>AppImage</span>
@@ -3126,6 +3126,47 @@
           versionBadge.href = 'https://github.com/Iito/parley/releases';
         });
     }
+  </script>
+
+  <script>
+    // Point the hero button at the visitor's platform and surface their card
+    // first. Progressive enhancement: no JS or an unknown/mobile platform
+    // leaves the static macOS default untouched. Apple Silicon vs Intel isn't
+    // detectable from the browser, so macOS keeps the Apple Silicon build.
+    (function () {
+      var platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
+      var ua = navigator.userAgent || '';
+      var os = null;
+      if (/Win/i.test(platform)) os = 'windows';
+      else if (/Android/i.test(ua)) os = null;
+      else if (/Mac/i.test(platform) && !/iPhone|iPad|iPod/.test(ua)) os = 'mac';
+      else if (/Linux|X11/i.test(platform)) os = 'linux';
+      if (!os || os === 'mac') return; // macOS is the static default
+
+      var downloads = {
+        windows: {
+          href: 'https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-Windows-cuda-all-setup.exe',
+          label: 'Download for Windows'
+        },
+        linux: {
+          href: 'https://github.com/Iito/parley/releases/download/v0.6.0-beta.2/Parley-0.6.0-beta.2-cuda-all-linux-x86_64.AppImage',
+          label: 'Download for Linux'
+        }
+      };
+
+      var btn = document.getElementById('hero-download');
+      var label = document.getElementById('hero-download-label');
+      if (btn && label) {
+        btn.href = downloads[os].href;
+        label.textContent = downloads[os].label;
+      }
+
+      var card = document.querySelector('.install-card[data-platform="' + os + '"]');
+      if (card && card.parentNode) {
+        card.parentNode.prepend(card);
+        card.style.borderColor = 'var(--teal-dark)';
+      }
+    })();
   </script>
 
   <!-- Contact Modal -->
