@@ -96,4 +96,4 @@ The lists below are drawn from Ollama's community integrations and checked again
 
 ## License
 
-The inference engine is open source; the mesh is source-available under a commercial license. See [lmparley.com](https://lmparley.com) for details and pricing.
+The inference engine is open source ([Spindll](https://github.com/Iito/spindll), Apache-2.0); the mesh is closed-source commercial software, free for up to 3 nodes. See [lmparley.com](https://lmparley.com) for details and pricing.
